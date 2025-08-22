@@ -1,0 +1,137 @@
+
+* {
+    margin: 0;
+    padding: 0; 
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    scroll-behavior: smooth; 
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background: black;
+}
+
+.newpost-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; 
+    padding: 50px 5%;
+    min-height: calc(100vh - 70px); 
+}
+
+form {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+label {
+    font-weight: bold;
+    margin-bottom: 0.3rem;
+}
+
+input[type="text"],
+input[type="file"] {
+    padding: 0.7rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1rem;
+}
+
+input[type="file"] {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1rem;
+    padding: 0.3rem; 
+    background-color: white;
+    color: black;
+}
+
+input[type="file"]::-webkit-file-upload-button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+input[type="file"]::-webkit-file-upload-button:hover {
+    background-color: #45a049;
+}
+
+button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 0.8rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+@media (max-width: 500px) {
+    form {
+        padding: 1.5rem;
+        width: 90%;
+    }
+}
+
+@media (max-width: 425px) {
+    .newpost-wrapper {
+        padding: 12px 1vw;
+        min-height: unset;
+    }
+
+    form {
+        padding: 0.9rem 0.2rem 1.1rem 0.2rem;
+        width: 92vw;
+        max-width: 93vw;   /* Reduce form width a bit more */
+    }
+
+    label {
+        font-size: 0.98rem;
+    }
+
+    input[type="text"], 
+    input[type="file"] {
+        font-size: 0.93rem;
+        padding: 0.46rem 0.35rem;
+    }
+
+    input[type="file"] {
+        width: 100%;
+        min-width: 0;
+        white-space: normal;
+        overflow: visible;
+        text-overflow: unset;
+        padding: 0.5rem 0.2rem;
+        font-size: 0.96rem;
+    }
+
+    input[type="file"]::-webkit-file-upload-button {
+        font-size: 0.93rem;
+        padding: 0.38rem 0.63rem;
+        border-radius: 15px;
+        white-space: nowrap;
+    }
+
+    button {
+        font-size: 0.97rem;
+        padding: 0.63rem 0.18rem;
+    }
+}

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-----------Google fonts link-------->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Meow+Script&display=swap" rel="stylesheet">
+    <!----------Google fons link---------->
+
+    <!-------Font awesome link------>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <!-------Font awesome link------>
+
+    <title>Blogger</title>
+
+        <!-----------Stylesheet link-------->
+        <link rel="stylesheet" href="/style.css">
+        <!----------Stylesheet link--------->
+</head>
+<body>
+
+    <!---Header---->
+    <%- include('../includes/header.ejs') %>
+    <!---Header---->
+
+    <!----Search Section----->
+    <div class="search-section">
+        <% if(currentUser) { %>
+            <button id="searchToggle" class="search-btn">
+                 <i class="fas fa-search"></i> Search User
+            </button>
+
+            <!---Search form(hidden)-->
+            <form id="searchForm" action="/search" method="GET" style="display: none;">
+                <input type="text" name="username" placeholder="Search by username" required>
+                <button type="submit"><i class="fas fa-search"></i></button>
+            </form>
+            <!---Search form(hidden)-->
+            <% } %>
+    </div>
+
+    <!----Search Section----->
+<br/>
+<br/>
+<br/>
+    <!--------------Posts--------------->
+    <div id="posts">
+        <div class="post-list">
+
+            <% for(post of posts) {%>
+                <div class="post-content">
+                    <img src="<%= post.image %>">
+                    <h3 class="user">@<%= post.username%></h3>
+                    <h4 class="content"><%= post.content %></h4>
+                    <br/>
+                    <br/>
+                    <a href="http://localhost:8080/posts/<%= post.id %>" class="details-btn">Show in details</a> <br/><br/>
+
+                    <% if(currentUser && post.owner && currentUser._id.toString()===post.owner._id.toString()) {%>
+                        <div class="post-actions">
+                            <a href="http://localhost:8080/posts/<%= post.id %>/edit" class="edit-btn">Edit Post</a> 
+
+                            <form method="post" action="/posts/<%=post.id%>?_method=DELETE" class="delete-post">
+                                <button>DeletePost</button>
+                            </form>
+                        </div>
+                    <%} %>
+                    <div class="interactions">
+                        <!---Like button---->
+                        <form method="POST" action="/posts/<%=post._id%>/like">
+                            <button type="submit" class="like-btn">
+                                <% if(post.likes.find(like => like.user.toString()=== currentUser?._id.toString())){ %>
+                                    <i class="fas fa-heart" style="color: red;"></i>
+                                <% } else { %>
+                                     <i class="far fa-heart"></i>
+                                <%} %>
+                            </button>
+                        </form>
+                        <!---Like button---->
+
+                        <!---Comment Toggel-->
+                        <button type="button" onclick="toggleCommentBox('<%=post._id%>')" class="comment-toggle">
+                            <i class="far fa-comment"></i>
+                        </button>
+                        <!---Comment Toggel-->
+
+                        <!----Comment Box---->
+                        <form method="POST" action="/posts/<%=post._id%>/comment" id="commentBox-<%=post._id%>" style="display: none;">
+                            <input type="text" name="content" placeholder="write a comment..." required/>
+                            <button type="submit">Post</button>
+                        </form>
+                        <!----Comment Box---->
+                    </div>
+                </div>
+            <% } %>
+            
+        </div>
+    </div>
+    <!--------------Posts--------------->
+
+    <!--------Footer------------>
+    <%- include('../includes/footer.ejs') %>
+
+    <!-----------Footer--------->
+
+    <!----Script for comment box------>
+    <script>
+        function toggleCommentBox(postId){
+            const box = document.getElementById("commentBox-" + postId); 
+            box.style.display = (box.style.display === "none" || box.style.display === "") ? "block" : "none";
+        }
+        //clear comment input after submit
+        document.querySelectorAll(`form[id^="commentBox-"]`).forEach(form=>{
+            form.addEventListener("submit", function(e){
+                const input = this.querySelectorAll("input[name='content']");
+                setTimeout(()=>{
+                    input.value=""; 
+                }, 100);
+            });
+        });
+    </script>
+    <!----Script for comment box------>
+
+    <!---Script for search bar visibility-->
+    <script>
+        document.getElementById("searchToggle")?.addEventListener("click", ()=>{
+            const form= document.getElementById("searchForm");
+            form.style.display = (form.style.display === "none" || form.style.display === "") ? "flex" : "none";
+        });
+    </script>
+    <!---Script for search bar visibility-->
+
+    <!--Hamburger Icon-->
+    <script>
+    const hamburger = document.getElementById("hamburger");
+    const menu = document.getElementById("showmenu");
+    const overlay = document.getElementById("overlay");
+
+    function toggleMenu() {
+        menu.classList.toggle("show");
+        overlay.classList.toggle("active"); 
+    }
+
+    hamburger.addEventListener("click", toggleMenu);
+    overlay.addEventListener("click", toggleMenu);
+    </script>
+    <!--Hamburger Icon-->
+</body>
+</html>

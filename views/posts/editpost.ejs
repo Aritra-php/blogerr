@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-----------Google fonts link-------->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Meow+Script&display=swap" rel="stylesheet">
+    <!----------Google fons link---------->
+
+    <!-------Font awesome link------>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <!-------Font awesome link------>
+
+    <title>Edit Your Post</title>
+
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="/editpost.css">
+
+</head>
+<body>
+
+<!---Header---->
+ <%- include('../includes/header.ejs') %>
+<!---Header---->
+
+<div class="edit-page-wrapper">
+<div class="edit-container">
+    <h3>@<%= eachpost.username %> Edit Your Post content</h3>
+    <p>Post ID: <%= eachpost.id %></p>
+    <img src="<%= eachpost.image %>">
+
+    <form method="post" action="/posts/<%= eachpost.id %>?_method=PATCH" enctype="multipart/form-data">
+        <textarea name="content"><%= eachpost.content %></textarea>
+
+         <div class="image-edit-container">
+            <label for="imageUpload" class="edit-image-button">Edit Image</label>
+            <input type="file" id="imageUpload" name="image" accept="image/*" hidden>
+            <span id="fileNameDisplay">No file chosen</span>
+        </div>
+
+        <button type="submit">Submit</button>
+    </form>
+</div>
+</div>
+
+<!--------Footer------------>
+<%- include('../includes/footer.ejs') %>
+<!-----------Footer--------->
+
+
+ <!--Hamburger Icon-->
+    <script>
+    const hamburger = document.getElementById("hamburger");
+    const menu = document.getElementById("showmenu");
+    const overlay = document.getElementById("overlay");
+
+    function toggleMenu() {
+        menu.classList.toggle("show");
+        overlay.classList.toggle("active"); 
+    }
+
+    hamburger.addEventListener("click", toggleMenu);
+    overlay.addEventListener("click", toggleMenu);
+    </script>
+<!--Hamburger Icon-->
+
+
+    <script>
+        const fileInput= document.getElementById("imageUpload"); 
+        const fileNameDisplay= document.getElementById("fileNameDisplay");
+
+        fileInput.addEventListener("change", ()=>{
+            fileNameDisplay.textContent= fileInput.files[0]?.name || "No file Chosen";
+        });
+    </script>
+ 
+</body>
+</html>

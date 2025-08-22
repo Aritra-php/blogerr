@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up Form</title>
+    <link rel="stylesheet" href="/signup.css">
+</head>
+<body>
+
+<div class="page-wrapper">
+    <!------Flash message section----->
+    <div class="flash-container">
+        <% if (error && error.length > 0) { %>
+            <div class="error-msg"><%= error[0] %></div>
+        <% } %>
+        <% if (success && success.length > 0) { %>
+            <div class="success-msg"><%= success[0] %></div>
+        <% } %>
+    </div>
+    <!------Flash message section----->
+
+    <div class="signup-container">
+        <h2>Sign Up</h2>
+        <% if(error && typeof error === 'string' && error.trim() !== '') { %>
+            <div class="error-msg"><%= error %></div>
+          <% } %>  
+        <form action="/signup" method="POST" enctype="multipart/form-data">
+            <div class="form-group">
+                <input type="text" name="fullname" placeholder="Enter Your Fullname" required>
+                <input type="email" name="email" placeholder="Enter Your Email" required>
+                <input type="tel" name="phone" placeholder="Enter Your Phone number" required>
+                <input type="date" name="dob" placeholder="Enter Your Date of Birth" required>
+                <input type="text" name="username" placeholder="Enter Your Username" required>
+                <input type="password" name="password" placeholder="Enter Your Password" required>
+                <input type="text" name="interests" placeholder="Enter your Interests" required>
+
+                <label for="profilePic">Upload Your Profile Picture</label>
+                <input type="file" id="profilePicInput" name="profilePic" accept="image/*" required>
+
+                <!-- Profile Picture Preview -->
+                <img id="profilePreview" style="display:none;" alt="Preview" class="profile-preview">
+                <!-- Profile Picture Preview -->
+                <br/>
+
+                <button type="submit">Create Account</button>
+                <p>Already have an accound? <a href="/login">Login Here</a></p>
+            </div>
+        </form>
+    </div>
+
+</div>
+
+<!-- Confetti Script -->
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+<script>
+document.getElementById('profilePicInput').addEventListener('change', function(event) {
+    const file = event.target.files[0];
+    const preview = document.getElementById('profilePreview');
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            preview.src = e.target.result;
+            preview.style.display = 'block';
+            preview.classList.add('pop-in');
+        };
+        reader.readAsDataURL(file);
+    }
+});
+
+// Trigger confetti when success message exists
+window.addEventListener('DOMContentLoaded', () => {
+    if (document.querySelector('.success-msg')) {
+        confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
+    }
+});
+</script>
+
+</body>
+</html>

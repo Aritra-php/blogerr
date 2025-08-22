@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notes</title>
+
+    <!---Google fonts link----->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Meow+Script&family=Inter:wght@400;600&family=Roboto:wght@400;700&family=Lora:wght@400;600&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <!---Google fonts link----->
+
+    <!---CSS Links----->
+    <link rel="stylesheet" href="/notes.css">
+    <link rel="stylesheet" href="/style.css">
+    <!---CSS Links----->
+
+    <!---Font awesome link---->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <!---Font awesome link---->
+</head>
+<body>
+    <!---Header----->
+    <%- include('../includes/header.ejs') %>
+    <!---Header----->
+
+    <div class="notes-container">
+        <h2>My Notes</h2>
+
+        <!------Font picker----->
+        <div class="editor-controls">
+            <label class="font-picker">
+                Font: 
+                <select id="fontPicker">
+                    <option value="Inter, system-ui, Arial, sans-serif">Inter (default)</option>
+                    <option value="Roboto, Arial, sans-serif">Roboto</option>
+                    <option value="Poppins, Arial, sans-serif">Poppins</option>
+                    <option value="Lora, 'Times New Roman', serif">Lora</option>
+                    <option value="Georgia, serif">Georgia</option>
+                    <option value="'Times New Roman', Times, serif">Times New Roman</option>
+                    <option value="'Courier New', Courier, monospace">Courier New</option>
+                    <option value="system-ui, Arial, sans-serif">System UI</option>
+                </select>
+            </label>
+        </div>
+        <!------Font picker----->
+
+        <!---Notes form----->
+        <form action="/notes" method="POST" id="noteForm">
+            <textarea name="content" id="noteContent" placeholder="Write your note..." required></textarea>
+            <div class="note-options">
+                <button type="submit" class="submit-btn">Save Note</button>
+            </div>
+        </form>
+        <!---Notes form----->
+
+    <!---Fetching notes----->
+    <div class="notes-list">
+      <% if (notes.length === 0) { %>
+        <p class="no-notes">No Notes Added yet!! Add one above</p>
+      <% } else { %>
+        <% notes.forEach(note => { %>
+          <div class="note-card">
+            <p><%= note.content %></p>
+            <div class="note-actions">
+              <button type="button" class="edit-btn" data-id="<%= note._id %>" data-content="<%= JSON.stringify(note.content) %>">
+                Edit
+              </button>
+              <form action="/notes/<%= note._id %>?_method=DELETE" method="POST">
+                <button type="submit" class="delete-btn">Delete</button>
+              </form>
+            </div>
+          </div>
+        <% }) %>
+      <% } %>
+    </div>
+<!---Fetching notes-----> 
+</div>
+
+<!---Footer-->
+<%- include('../includes/footer.ejs') %>
+<!---Footer-->
+
+ <!--Hamburger Icon-->
+    <script>
+    const hamburger = document.getElementById("hamburger");
+    const menu = document.getElementById("showmenu");
+    const overlay = document.getElementById("overlay");
+
+    function toggleMenu() {
+        menu.classList.toggle("show");
+        overlay.classList.toggle("active"); 
+    }
+
+    hamburger.addEventListener("click", toggleMenu);
+    overlay.addEventListener("click", toggleMenu);
+    </script>
+<!--Hamburger Icon-->
+
+<!-- JS -->
+  <script>
+    const fontPicker = document.getElementById('fontPicker');
+    const noteContent = document.getElementById('noteContent');
+
+  // Function to apply font to both textarea and saved notes
+    function applyFont(fontValue) {
+    // Apply to editor
+    noteContent.style.fontFamily = fontValue;
+    // Apply to fetched notes
+    document.querySelectorAll('.note-card p').forEach(p => {
+      p.style.fontFamily = fontValue;
+    });
+  }
+
+     // Load saved font from localStorage
+    const savedFont = localStorage.getItem('note_editor_font');
+    if (savedFont) {
+      fontPicker.value = savedFont;
+      applyFont(savedFont);
+    } else {
+      applyFont(fontPicker.value);
+    }
+
+    // Change event on font picker
+    fontPicker.addEventListener('change', () => {
+      const selectedFont = fontPicker.value;
+      applyFont(selectedFont);
+      localStorage.setItem('note_editor_font', selectedFont);
+    });
+
+    // Edit note functionality
+    function editNote(id, content) {
+      const form = document.getElementById('noteForm');
+      form.action = '/notes/' + id + '?_method=PATCH';
+      noteContent.value = content;
+      noteContent.focus();
+    }
+
+    document.addEventListener('click', function(e) {
+      const btn = e.target.closest('.edit-btn');
+      if (btn) {
+        const id = btn.dataset.id;
+        const content = JSON.parse(btn.dataset.content);
+        editNote(id, content);
+      }
+    });
+  </script>
+<!-- JS -->
+
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log In Form</title>
+    <link rel="stylesheet" href="/login.css">
+</head>
+<body>
+
+<div class="page-wrapper">
+     <!------Flash message section----->
+    <div class="flash-container">
+        <% if (error && error.length > 0) { %>
+            <div class="error-msg"><%= error[0] %></div>
+        <% } %>
+        <% if (success && success.length > 0) { %>
+            <div class="success-msg"><%= success[0] %></div>
+        <% } %>
+    </div>
+    <!------Flash message section----->
+
+
+    <div class="login-container">
+        <h2>Login</h2>
+        <% if(error && typeof error === 'string' && error.trim() !== '') { %>
+            <div class="error-msg"><%= error %></div>
+        <% } %>
+        
+        <form action="/login" method="POST">
+            <div class="form-group">
+                <input type="text" name="username" placeholder="Enter Your Username" required>
+                <input type="password" name="password" placeholder="Enter Your Password" required>
+                <button type="submit">Login</button>
+                <p>Don't have an account yet? <a href="/signup">Sign up here</a></p>
+            </div>
+        </form>
+    </div>
+
+</div>
+
+</body>
+</html>

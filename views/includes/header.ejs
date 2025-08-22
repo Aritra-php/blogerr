@@ -1,0 +1,37 @@
+
+<!-------------Header-------------->
+
+<div id="header">
+  <div class="navigation">
+      <p class="logo">Blogger.</p>
+
+      <!-- Hamburger (only visible on mobile) -->
+      <div class="hamburger" id="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+
+    <nav>
+      <ul id="showmenu">
+        <li><a href="http://localhost:8080/posts">Home</a></li>
+        <li><a href="http://localhost:8080/posts">Posts</a></li>
+        <li><a href="/notes"><i class="fas fa-sticky-note"></i> Notes</a></li>
+        <li><a href="http://localhost:8080/posts/new">Create New Post</a></li>
+
+        <% if(!currentUser){ %>
+          <li><a href="/login">Login</a></li>
+          <li><a href="/signup">Sign Up</a></li>
+        <% } else { %>
+          <li><a href="/profile"><i class="fas fa-user-circle"></i>&nbsp;Profile</a></li>
+          <li><a href="/logout">Logout</a></li>
+        <% } %>
+      </ul>
+    </nav>
+  </div>
+</div>
+
+<!-- Overlay for mobile menu -->
+<div id="overlay"></div>
+
+<!------------Header End------------>

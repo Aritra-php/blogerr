@@ -1,0 +1,49 @@
+/* Navigation Styles */
+nav p {
+    font-size: 40px;
+    font-family: "Meow Script", cursive;
+    color: #fff;
+}
+
+.navigation {
+    padding: 10px 10%;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+nav ul li {
+    display: inline-block;
+    list-style: none;
+    margin: 10px 20px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem; 
+    transition: color 0.3s ease;
+}
+
+nav ul li a:hover {
+    color: #00b894;
+}
+
+/* Style the Font Awesome icon */
+.navigation nav ul li a i {
+    font-size: 1.1rem;
+    color: #00b894;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.navigation nav ul li a:hover i {
+    transform: scale(1.2);
+    color: #1dd1a1;
+}

@@ -1,0 +1,778 @@
+/* Global Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: #080808;
+    color: #fff;
+}
+
+/* Navigation Styles */
+.logo {
+    font-size: 40px;
+    font-family: "Meow Script", cursive;
+    color: #fff;
+}
+
+
+.navigation {
+    display: flex;          
+    justify-content: space-between; 
+    align-items: center;
+    padding: 10px 10%;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; 
+    flex-wrap: wrap;
+    position: relative;
+}
+
+nav ul {
+    display: flex;
+    gap: 20px;
+    position: static;  
+    transform: none;    
+    width: auto;        
+    height: auto;       
+    background: none;   
+    padding: 0;
+}
+
+nav ul li {
+    display: inline-block;
+    list-style: none;
+    margin: 3px 5px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem; 
+    transition: color 0.3s ease;
+    position: relative;
+    overflow: hidden; 
+}
+
+nav ul li a::after {
+    content: '';
+    display: block;
+    position: absolute;
+    left: 0;
+    bottom: 5px;
+    width: 100%;
+    height: 2px;
+    background: #00ffff;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s cubic-bezier(0.4,0,0.2,1);
+}
+
+nav ul li a:hover::after,
+nav ul li a:focus::after {
+    transform: scaleX(1);
+}
+
+
+.hamburger {
+    display: none; 
+    flex-direction: column;
+    justify-content: space-between;
+    width: 25px;
+    height: 18px;
+    cursor: pointer;
+}
+
+.hamburger span {
+    display: block;
+    height: 3px;
+    width: 100%;
+    background: #fff;
+    border-radius: 2px;
+}
+
+.hamburger:hover {
+    color: #00ffff;
+    transform: rotate(90deg) scale(1.2);
+}
+
+#overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.6);
+    z-index: 900; 
+}
+
+/* Show overlay when active */
+#overlay.active {
+    display: block;
+}
+
+/* Default (desktop & tablet view) */
+#showmenu {
+    display: flex;
+    gap: 20px;
+    position: static;
+    transform: none;
+    width: auto;
+    height: auto;
+    background: none;
+    padding: 0;
+}
+
+
+#showmenu li a {
+  color: #fff; /* white text */
+  font-size: 1rem;
+  display: block;
+  padding: 12px 20px;
+  transition: background 0.3s ease;
+}
+
+#showmenu li a:hover {
+  color: #00ffff; /* accent color */
+}
+
+#showmenu.show {
+  transform: translateX(0);
+}
+
+/* Style the Font Awesome icon */
+.navigation nav ul li a i {
+    font-size: 1.1rem;
+    color: #00b894;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.navigation nav ul li a:hover i {
+    transform: scale(1.2);
+    color: #1dd1a1;
+}
+
+/* Section Titles */
+.section-title {
+    text-align: center;
+    font-size: 28px;
+    margin-bottom: 30px;
+    color: #00ffff;
+}
+
+/* Posts Grid */
+#posts {
+    padding: 50px 5%;
+}
+
+.post-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-gap: 40px;
+    margin-top: 30px;
+}
+
+.post-content {
+    position: relative;
+    overflow: hidden; 
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background: #121212;
+    padding: 20px;
+    border-radius: 15px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.post-content:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 20px rgba(0, 255, 255, 0.3);
+}
+
+.post-content img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.user {
+    font-size: 18px;
+    color: #00ffff;
+    margin-bottom: 10px;
+}
+
+.content {
+    font-size: 16px;
+    margin-bottom: 15px;
+    line-height: 1.5;
+}
+
+/* Post Action Buttons */
+.post-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.btn {
+    background-color: #00ffff;
+    color: #080808;
+    padding: 10px 20px;
+    text-align: center;
+    border-radius: 8px;
+    font-weight: bold;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #00cccc;
+    color: white;
+}
+
+a.edit-btn, a.delete-btn {
+    padding: 6px 12px;
+    margin-right: 10px;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background 0.3s ease;
+}
+
+a.edit-btn {
+    background-color: #3498db;
+    color: white;
+    font-size: 12px;
+}
+
+a.edit-btn:hover {
+    background-color: #2980b9;
+}
+
+.delete-post button {
+    background-color: #e74c3c;
+    color: white;
+    padding: 6px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    font-size: 12px;
+}
+
+.delete-post button:hover {
+    background-color: #c0392b;
+}
+
+.details-btn {
+    display: inline-block;
+    background-color: #1abc9c;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 12px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.details-btn:hover {
+    background-color: #16a085;
+    transform: translateY(-2px);
+}
+
+.post-actions {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px; 
+  margin-top: 10px;
+}
+
+.post-actions form {
+  display: inline-block;
+  margin: 0;
+}
+
+/* .post-actions a,
+.post-actions button {
+  padding: 8px 12px;
+  background-color: #007bff;
+  color: white;
+  text-decoration: none;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+} */
+
+.post-actions a:hover,
+.post-actions button:hover {
+  background-color: #0056b3;
+}
+
+
+
+/* Create Post Button */
+.create-post-btn {
+    text-align: center;
+    margin: 30px auto;
+}
+
+/* Interaction section container */
+.interactions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.like-btn, .comment-toggle {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+/* Like and comment icons */
+.like-btn i,
+.comment-toggle i {
+    font-size: 20px;
+    cursor: pointer;
+    transition: transform 0.2s, color 0.3s;
+}
+
+.like-btn i:hover,
+.comment-toggle i:hover {
+    transform: scale(1.2);
+    color: #ff4757; 
+}
+
+/* Like icon when liked */
+.liked {
+    color: red;
+}
+
+/* Comment box styling */
+form[id^="commentBox-"] {
+    margin-top: 10px;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+form[id^="commentBox-"] input[type="text"] {
+    flex: 1;
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    transition: 0.3s;
+}
+
+form[id^="commentBox-"] input[type="text"]:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0,123,255,0.3);
+}
+
+form[id^="commentBox-"] button {
+    padding: 8px 12px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+form[id^="commentBox-"] button:hover {
+    background-color: #0056b3;
+}
+
+/* search bar */
+.search-section {
+    position: relative;
+    margin: 20px 10% 0 10%; /* more margin below nav */
+    z-index: 800;
+    z-index: 800; /* under menu */
+    top: 10px;
+    left: 0;
+    margin-left: 10%; /* aligns under Blogger text */
+    margin-top: 10px;
+}
+
+.search-btn {
+    background: #1c1c1c; /* light black */
+    color: white;
+    border: none;
+    padding: 6px 14px;
+    border-radius: 50px; /* curved edges */
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.4);
+    transition: all 0.3s ease;
+}
+
+.search-btn i {
+    font-size: 14px;
+    color: #00ffff;
+}
+
+.search-btn:hover {
+    background: #2a2a2a; /* slightly lighter on hover */
+    transform: scale(1.1);
+}
+
+#searchForm {
+    margin-top: 10px;
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+}
+
+#searchForm input {
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    flex: 1;
+}
+
+#searchForm button {
+    background: #3498db;
+    border: none;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+#searchForm button:hover {
+    background: #2980b9;
+}
+
+
+/* footer */
+
+.site-footer {
+    background-color: #000;
+    color: #fff;
+    padding: 30px 10%;
+    text-align: center;
+    margin-top: 50px;
+    border-top: 2px solid #222;
+}
+
+.footer-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+
+.footer-links {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.footer-links a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.footer-links a:hover {
+    color: #00ffff;
+    transform: translateY(-2px);
+}
+
+/* Contact Info */
+.contact-info {
+    margin-top: 15px;
+    font-size: 14px;
+    color: #ccc;
+}
+
+.contact-info p {
+    margin: 5px 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: color 0.3s ease;
+}
+
+.contact-info i {
+    color: #00ffff;
+    font-size: 16px;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.contact-info p:hover {
+    color: #fff;
+}
+
+.contact-info p:hover i {
+    transform: scale(1.2);
+    color: #1dd1a1;
+}
+
+.social-icons {
+    display: flex;
+    gap: 15px;
+}
+
+.social-icons a {
+    color: #fff;
+    font-size: 18px;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.social-icons a:hover {
+    color: #00ffff;
+    transform: scale(1.2);
+}
+
+.footer-bottom {
+    font-size: 12px;
+    color: #bbb;
+    margin-top: 10px;
+}
+
+/* Responsive Media Queries */
+@media (max-width: 480px) {
+    .footer-links {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+@media (max-width: 768px) {
+     nav ul {
+        flex-direction: column;
+        position: fixed;
+        top: 0;
+        right: -100%;   
+        width: 70%;
+        height: 100vh;
+        background-color: #121212;
+        padding: 20px;
+        transition: right 0.3s ease;
+        z-index: 1000;
+    }
+
+    nav ul.show {
+        right: 0; 
+    }
+
+    nav ul li {
+        text-align: left;
+        margin: 10px 0;
+    }
+    .navigation {
+        padding: 10px 5%;
+    }
+    .section-title {
+        font-size: 22px;
+    }
+
+    .post-content img {
+        height: 160px;
+    }
+}
+
+/* Mobile menu */
+@media (max-width: 768px) {
+    #showmenu {
+        flex-direction: column;
+        position: fixed;
+        top: 0;
+        right: -100%;     /* keep hidden */
+        width: 70%;
+        height: 100vh;
+        background-color: #121212;
+        padding: 60px 20px 20px;
+        transition: right 0.3s ease;
+        z-index: 1000;
+    }
+
+    #showmenu.show {
+        right: 0;  /* sliding menu */
+    }
+}
+
+@media (max-width: 768px) {
+    /* Show hamburger */
+    .hamburger {
+        display: flex;
+        font-size: 26px;
+        margin-left: auto;
+        cursor: pointer;
+        z-index: 1101;
+    }
+
+    nav {
+        display: block; /* allow mobile sider menu */
+    }
+
+    /* Hide normal nav until hamburger clicked */
+    nav ul {
+        flex-direction: column;
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 70%;
+        height: 100vh;
+        background-color: #121212;
+        padding:  60px 20px 20px;
+        transition: right 0.3s ease;
+        z-index: 1000;
+    }
+
+    nav ul.show {
+        right: 0;
+    }
+
+    nav ul li {
+        margin: 12px 0; /* reduced spacing */
+        text-align: left;
+    }
+
+    /* Search section under Blogger text */
+    .search-section {
+        position: relative;
+        margin: 20px 5% 0 5%;
+        width: 90%;
+        top: 0;
+    }
+}
+
+/*responsiveness for search opton*/
+@media (max-width: 768px) {
+    .search-section {
+        position: relative;
+        margin: 10px 5% 0 5%; /* move closer */
+        width: 90%;
+        top: 0;
+    }
+
+    #searchForm {
+        width: 100%;
+        justify-content: flex-start; /* align left */
+    }
+}
+
+@media (max-width:1200px) {
+    .navigation {
+         padding: 10px 4%; 
+        }
+}
+
+@media (max-width:1024px) {
+    .navigation {
+    padding: 10px 2%; 
+
+}
+nav ul,#showmenu 
+{ 
+    gap: 10px; 
+}
+nav ul li {
+margin: 3px 6px;
+}
+}
+
+/* Footer responsiveness */
+@media (max-width: 425px) {
+    .footer-content {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        text-align: center;
+        max-width: 100vw;
+        padding: 0 10px;
+        overflow-x: hidden;
+    }
+
+    .footer-links {
+        display: flex;
+        flex-wrap: nowrap !important;  /* force nowrap */
+        justify-content: flex-start;    /* align left (change from center for scroll) */
+        gap: 15px;
+        width: 100%;
+        max-width: 100vw;
+        overflow-x: auto;               /* allow horizontal scroll */
+        -webkit-overflow-scrolling: touch;
+        -ms-overflow-style: none;       /* hide scrollbar in IE and Edge */
+        scrollbar-width: none;          /* hide scrollbar in Firefox */
+    }
+
+    /* Hide scrollbar for WebKit browsers */
+    .footer-links::-webkit-scrollbar {
+        display: none;
+    }
+
+    .footer-links a {
+        flex: 0 0 auto !important;
+        white-space: nowrap;
+        font-size: 14px;
+        padding: 6px 8px;
+        display: inline-block;
+        margin: 0;                     /* remove possible margins */
+        box-sizing: border-box;
+    }
+
+    .contact-info {
+        font-size: 13px;
+        margin-top: 0;
+    }
+
+    .social-icons {
+        gap: 12px;
+        font-size: 18px;
+    }
+
+    .footer-bottom {
+        font-size: 11px;
+        margin-top: 10px;
+    }
+}
+
+
+
+/* @media (max-width: 480px) {
+    nav {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    nav ul {
+        padding-left: 0;
+        margin-top: 10px;
+    }
+
+    .post-list {
+        grid-template-columns: 1fr;
+    }
+
+    .btn {
+        font-size: 14px;
+        padding: 8px 15px;
+    }
+} */

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-----------Google fonts link-------->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Meow+Script&display=swap" rel="stylesheet">
+    <!----------Google fons link---------->
+
+    <title>Edit Profile</title>
+
+    <!----font awesome link------>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!----font awesome link------>
+
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="/editprofile.css">
+
+</head>
+<body>
+
+    <!---Header---->
+    <%- include('../includes/header.ejs') %>
+    <!---Header---->
+
+    
+    <div class="edit-profile-container">
+        <h2>Edit Your Profile</h2>
+        <form method="POST" action="/editprofile?_method=PATCH" enctype="multipart/form-data">
+            <div class="image-wrapper">
+                <img src="<%=user.profilePic%>" class="edit-profile-pic" id="previewImage">
+                <label for="imageUpload" class="edit-icon"><i class="fa fa-camera"></i></label>
+                <input type="file" name="profilePic" id="imageUpload" accept="image/*" hidden>
+            </div>
+
+            Full Name: <input type="text" name="fullname" value="<%=user.fullname%>" required>
+            Username<input type="text" name="username" value="<%=user.username%>" required>
+            Email:<input type="email" name="email" value="<%=user.email%>" required>
+            Phone Number:<input type="text" name="phone" value="<%= user.phone %>" required>
+            Date of Birth<input type="date" name="dob" value="<%= user.dobRaw %>" required>
+            Interests<input type="text" name="interests" value="<%= user.interests %>" required>
+
+            <button type="submit">Update Profile</button>
+        </form>
+    </div>
+
+<!--------Footer------------>
+<%- include('../includes/footer.ejs') %>
+<!-----------Footer--------->
+
+
+ <!--Hamburger Icon-->
+    <script>
+    const hamburger = document.getElementById("hamburger");
+    const menu = document.getElementById("showmenu");
+    const overlay = document.getElementById("overlay");
+
+    function toggleMenu() {
+        menu.classList.toggle("show");
+        overlay.classList.toggle("active"); 
+    }
+
+    hamburger.addEventListener("click", toggleMenu);
+    overlay.addEventListener("click", toggleMenu);
+    </script>
+<!--Hamburger Icon-->
+
+    <script>
+        const imageUpload = document.getElementById("imageUpload");
+        const previewImage = document.getElementById("previewImage");
+
+        imageUpload.addEventListener("change", () => {
+            const file = imageUpload.files[0];
+            if (file) {
+                previewImage.src = URL.createObjectURL(file);
+            }
+        });
+    </script>
+</body>
+</html>
