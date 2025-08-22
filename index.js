@@ -91,6 +91,10 @@ app.use("/posts", postRoutes);
 app.use("/", userRoutes);
 app.use("/notes", notesRoute);
 
+app.get("/", (req, res) => {
+  res.render("views/index.ejs");
+});
+
 
 //call port 
 app.listen(port, ()=>{                              
