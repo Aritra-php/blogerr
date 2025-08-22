@@ -92,7 +92,7 @@ app.use("/", userRoutes);
 app.use("/notes", notesRoute);
 
 app.get("/", (req, res) => {
-  res.render("views/index.ejs");
+  res.render("index.ejs");
 });
 
 
