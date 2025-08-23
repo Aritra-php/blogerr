@@ -49,33 +49,35 @@
     <div id="posts">
         <div class="post-list">
 
-            <% for(post of posts) {%>
+            <% for(const post of posts) {%>
                 <div class="post-content">
                     <img src="<%= post.image %>">
                     <h3 class="user">@<%= post.username%></h3>
                     <h4 class="content"><%= post.content %></h4>
                     <br/>
                     <br/>
-                    <a href="http://localhost:8080/posts/<%= post.id %>" class="details-btn">Show in details</a> <br/><br/>
+                    <a href="/posts/<%= post.id %>" class="details-btn">Show in details</a> <br/><br/>
 
                     <% if(currentUser && post.owner && currentUser._id.toString()===post.owner._id.toString()) {%>
                         <div class="post-actions">
-                            <a href="http://localhost:8080/posts/<%= post.id %>/edit" class="edit-btn">Edit Post</a> 
+                            <a href="/posts/<%= post.id %>/edit" class="edit-btn">Edit Post</a> 
 
-                            <form method="post" action="/posts/<%=post.id%>?_method=DELETE" class="delete-post">
+                            <form method="post" action="/posts/<%= post.id %>?_method=DELETE" class="delete-post">
                                 <button>DeletePost</button>
                             </form>
                         </div>
                     <%} %>
                     <div class="interactions">
                         <!---Like button---->
-                        <form method="POST" action="/posts/<%=post._id%>/like">
+                        <form method="POST" action="/posts/<%= post._id %>/like">
                             <button type="submit" class="like-btn">
-                                <% if(post.likes.find(like => like.user.toString()=== currentUser?._id.toString())){ %>
-                                    <i class="fas fa-heart" style="color: red;"></i>
-                                <% } else { %>
-                                     <i class="far fa-heart"></i>
-                                <%} %>
+                            <% const userId = currentUser ? currentUser._id?.toString() : null;
+                                const liked = Array.isArray(post.likes) && userId ? post.likes.some(like => like.user?.toString() === userId): false;%>
+                        <% if (liked) { %>
+                            <i class="fas fa-heart" style="color: red;"></i>
+                        <% } else { %>
+                            <i class="far fa-heart"></i>
+                        <% } %>
                             </button>
                         </form>
                         <!---Like button---->
@@ -149,3 +151,6 @@
     <!--Hamburger Icon-->
 </body>
 </html>
+
+
+

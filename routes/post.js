@@ -15,13 +15,30 @@ const { isLoggedIn, isOwner } = require("../middleware.js");
 const { cloudinary, storagePost } = require("../confiq/cloudinary");
 const upload = multer({ storage: storagePost });
 
-//api route to render the main page containing all posts
-router.get("/", async (req, res)=>{                        
-    const posts = await Blog.find({}).populate("owner"); 
-    for(let post of posts){
-        post.likes = await Like.find({post: post._id});
-    }
-    res.render("posts/index.ejs", {posts});
+//rendering home page
+router.get("/", async (req, res) => {
+  // Get posts and owners as plain JS objects
+  const posts = await Blog.find({}).populate("owner").lean();
+
+  // Collect post IDs to fetch all likes in one go
+  const postIds = posts.map(p => p._id);
+  const likes = await Like.find({ post: { $in: postIds } }).lean();
+
+  // Group likes by post
+  const likesByPost = likes.reduce((acc, like) => {
+    const key = like.post.toString();
+    if (!acc[key]) acc[key] = [];
+    acc[key].push(like);
+    return acc;
+  }, {});
+
+  // Attach likes array to each post (always an array)
+  const postsWithLikes = posts.map(p => ({
+    ...p,
+    likes: likesByPost[p._id.toString()] || [],
+  }));
+
+  res.render("posts/index.ejs", { posts: postsWithLikes });
 });
 
 //rendering form for new post
@@ -147,36 +164,7 @@ router.post("/:id/comment", isLoggedIn, async(req, res)=>{
 
     res.redirect(`/posts/${postId}`); 
 });
-
-//api route for viewing other users post via postindetails.ejs
-router.get("/:id", isLoggedIn, async(req, res)=>{
-    try{
-        const postId = req.params.id; 
-        const eachpost = await Blog.findById(postId).populate("owner", "username profilePic").populate({
-            path: "likes", 
-            populate: {path: "user", select: "username"}
-        }).populate({
-            path: "comments", 
-            populate: {path: "user", select: "username"}
-        });
-
-        if(!eachpost){
-            req.flash("error", "Post not found");
-            return res.redirect("/posts");
-        }
-
-        res.render("posts/postindetails.ejs", {
-            eachpost,
-            likes: eachpost.likes || [], 
-            comment: eachpost.comment || []
-        });
-    } catch(err){
-        console.log(err);
-        req.flash("error", "Something went wrong");
-        res.redirect("/posts");
-    }
-});
-
+ 
 module.exports = router; 
 
 
@@ -206,3 +194,40 @@ module.exports = router;
         // if(req.file){
         //     imagePath = "/Images/"+req.file.filename;
         // }
+
+//api route to render the main page containing all posts
+// router.get("/", async (req, res)=>{                        
+//     const posts = await Blog.find({}).populate("owner"); 
+//     for(let post of posts){
+//         post.likes = await Like.find({post: post._id});
+//     }
+//     res.render("posts/index.ejs", {posts});
+// });
+//api route for viewing other users post via postindetails.ejs
+// router.get("/:id", isLoggedIn, async(req, res)=>{
+//     try{
+//         const postId = req.params.id; 
+//         const eachpost = await Blog.findById(postId).populate("owner", "username profilePic").populate({
+//             path: "likes", 
+//             populate: {path: "user", select: "username"}
+//         }).populate({
+//             path: "comments", 
+//             populate: {path: "user", select: "username"}
+//         });
+
+//         if(!eachpost){
+//             req.flash("error", "Post not found");
+//             return res.redirect("/posts");
+//         }
+
+//         res.render("posts/postindetails.ejs", {
+//             eachpost,
+//             likes: eachpost.likes || [], 
+//             comment: eachpost.comment || []
+//         });
+//     } catch(err){
+//         console.log(err);
+//         req.flash("error", "Something went wrong");
+//         res.redirect("/posts");
+//     }
+// });
