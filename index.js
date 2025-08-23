@@ -92,8 +92,14 @@ app.use("/posts", postRoutes);
 app.use("/", userRoutes);
 app.use("/notes", notesRoute);
 
-app.get("/", (req, res) => {
-  res.render("posts/index");
+app.get("/", async (req, res) => {
+  try {
+    const posts = await Blog.find({});   // fetch all posts from DB
+    res.render("posts/index", { posts }); // pass posts to EJS
+  } catch (err) {
+    console.error(err);
+    res.send("Error fetching posts");
+  }
 });
 
 //call port 
