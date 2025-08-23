@@ -1,6 +1,7 @@
 const express=require("express");   //require express packgae
 const app=express();   //call express package
-const port=8080;        //define port 
+// const port=8080;        //define port 
+const port = process.env.PORT || 8080;
 require("dotenv").config(); //.env file configuration
 const mongoose = require("mongoose");  //require mongoose
 const Blog = require("./models/blog.js"); //require Blog collection or model 
@@ -92,9 +93,8 @@ app.use("/", userRoutes);
 app.use("/notes", notesRoute);
 
 app.get("/", (req, res) => {
-  res.render("index.ejs");
+  res.render("posts/index");
 });
-
 
 //call port 
 app.listen(port, ()=>{                              
