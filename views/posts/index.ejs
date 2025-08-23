@@ -56,13 +56,13 @@
                     <h4 class="content"><%= post.content %></h4>
                     <br/>
                     <br/>
-                    <a href="/posts/<%= post.id %>" class="details-btn">Show in details</a> <br/><br/>
+                    <a href="/posts/<%= post._id %>" class="details-btn">Show in details</a> <br/><br/>
 
                     <% if(currentUser && post.owner && currentUser._id.toString()===post.owner._id.toString()) {%>
                         <div class="post-actions">
-                            <a href="/posts/<%= post.id %>/edit" class="edit-btn">Edit Post</a> 
+                            <a href="/posts/<%= post._id %>/edit" class="edit-btn">Edit Post</a> 
 
-                            <form method="post" action="/posts/<%= post.id %>?_method=DELETE" class="delete-post">
+                            <form method="post" action="/posts/<%= post._id %>?_method=DELETE" class="delete-post">
                                 <button>DeletePost</button>
                             </form>
                         </div>

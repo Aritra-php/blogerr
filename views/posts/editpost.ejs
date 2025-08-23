@@ -29,10 +29,10 @@
 <div class="edit-page-wrapper">
 <div class="edit-container">
     <h3>@<%= eachpost.username %> Edit Your Post content</h3>
-    <p>Post ID: <%= eachpost.id %></p>
+    <p>Post ID: <%= eachpost._id %></p>
     <img src="<%= eachpost.image %>">
 
-    <form method="post" action="/posts/<%= eachpost.id %>?_method=PATCH" enctype="multipart/form-data">
+    <form method="post" action="/posts/<%= eachpost._id %>?_method=PATCH" enctype="multipart/form-data">
         <textarea name="content"><%= eachpost.content %></textarea>
 
          <div class="image-edit-container">
