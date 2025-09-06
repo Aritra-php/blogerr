@@ -13,7 +13,7 @@ const { isLoggedIn, isOwner } = require("../middleware.js");
 
 //cloudinary setup
 const { cloudinary, storagePost } = require("../confiq/cloudinary");
-const upload = multer({ storage: storagePost });
+const upload = multer({ storage: storagePost }); 
 
 //rendering home page
 router.get("/", async (req, res) => {

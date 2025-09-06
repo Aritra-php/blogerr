@@ -42,14 +42,14 @@ const store = MongoStore.create({
     crypto:{
         secret: process.env.SECRET,
     }, 
-    touchAfter: 24*3600,
+    touchAfter: 24*3600, 
 });
 
 store.on("error", ()=>{
     console.log("ERROR IN MONGO SESSION", err);
 })
 
-//middleware for session
+//middleware for session(server side session)
 app.use(session({
     store,
     secret: process.env.SECRET, 

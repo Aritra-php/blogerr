@@ -17,7 +17,7 @@ const signupUpload = multer({ storage: storageProfile });
 
 //api route for fetching signup form
 router.get("/signup", (req, res)=>{
-    res.render("user/signup.ejs",)
+    res.render("user/signup.ejs");
 });
 
 //api route for storing data from signup.ejs form into User model 

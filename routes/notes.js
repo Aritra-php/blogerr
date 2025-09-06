@@ -3,7 +3,7 @@ const router=express.Router();
 const Note = require("../models/note.js"); //require Note model
 
 //require middleware for authorization
-const { isLoggedIn, isOwner } = require("../middleware.js");
+const { isLoggedIn, isOwner } = require("../middleware.js"); 
 
 
 //api route for fetching notes.ejs 
